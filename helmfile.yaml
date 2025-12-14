@@ -1,0 +1,35 @@
+repositories:
+  - name: argo
+    url: https://argoproj.github.io/argo-helm
+  - name: traefik
+    url: https://traefik.github.io/charts
+
+helmDefaults:
+  kubeContext: nixos-home
+  cleanupOnFail: false
+  waitForJobs: true
+  timeout: 600
+  createNamespace: true
+
+releases:
+  - name: argocd
+    chart: argo/argo-cd
+    namespace: argocd
+    values:
+      - values/{{ .Environment.Name }}/argocd.yaml
+
+  - name: traefik
+    chart: traefik/traefik
+    namespace: traefik
+    values:
+      - values/{{ .Environment.Name }}/traefik.yaml
+
+  - name: external-dns
+    chart: bitnami/external-dns
+    namespace: external-dns
+    values:
+      - values/{{ .Environment.Name }}/external-dns.yaml
+
+environments:
+  default:
+    kubeContext: nixos-home

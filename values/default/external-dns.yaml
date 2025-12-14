@@ -1,0 +1,9 @@
+service:
+  type: LoadBalancer
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: "*.sriram.home"
+    external-dns.alpha.kubernetes.io/ttl: "60"
+
+ingressClass:
+  enabled: true
+  isDefaultClass: true
